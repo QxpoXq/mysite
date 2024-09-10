@@ -4,17 +4,18 @@ body {
     font-size: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 header {
-    background: #333;
+    background-color: #333;
     padding: 20px 0;
 }
 
 .container {
     display: flex;
     justify-content: center;
+    /* 中央揃え */
 }
 
 nav ul {
@@ -25,10 +26,11 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 15px;
+    position: relative;
+    margin: 0 40px;
 }
 
-nav ul li a{
+nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 1.2em;
@@ -37,4 +39,20 @@ nav ul li a{
 
 nav ul li a:hover {
     color: #f39c12;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
