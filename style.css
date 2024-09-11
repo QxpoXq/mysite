@@ -69,7 +69,7 @@ main {
 .load {
     width: 30px; /* 横幅を100%に設定 */
     height: 10px;   /* 初期は高さ0 */
-    background-color: aquamarine;
+    background-color: lemonchiffon;
     transition: height 1s ease;
     overflow: hidden; /* 中身が見えないようにする */
     position: relative;

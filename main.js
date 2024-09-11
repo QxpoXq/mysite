@@ -91,4 +91,40 @@
         });
     });
     
+    // 既存のコード...
+
+document.addEventListener('DOMContentLoaded', function () {
+    const loadBar = document.querySelector('.load');
+    const aboutLink = document.getElementById('about-link');
+    let isExpanded = false;
+
+    // loadBarクリックでプロフィールをトグル
+    loadBar.addEventListener('click', () => {
+        toggleProfile();
+    });
+
+    // aboutリンククリックでプロフィールをトグル
+    aboutLink.addEventListener('click', (event) => {
+        event.preventDefault(); // ページ遷移を防ぐ
+        toggleProfile();
+    });
+
+    function toggleProfile() {
+        const profileContent = loadBar.querySelector('.profile-content');
+
+        if (isExpanded) {
+            profileContent.style.opacity = '0';  // フェードアウト
+            setTimeout(() => {
+                loadBar.classList.remove('expanded');  // サイズを縮小
+            }, 500);  // フェードアウトが完了してから縮小
+        } else {
+            loadBar.classList.add('expanded');
+            setTimeout(() => {
+                profileContent.style.opacity = '1';  // フェードイン
+            }, 300);  // サイズが広がってから表示
+        }
+        isExpanded = !isExpanded;
+    }
+});
+
 }
