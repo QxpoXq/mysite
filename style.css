@@ -57,12 +57,23 @@ nav ul li a:hover {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.load {
-    width: 30%;
-    background-color: aquamarine;
-    transition: width 4s;
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.load:active {
+.load {
+    width: 50px;
+    height: 20px;
+    background-color: aquamarine;
+    transition: width 1s ease;
+    margin: 0 auto; 
+}
+
+
+.load.expanded {
     width: 100%;
+    transition: width 1s ease;
 }
