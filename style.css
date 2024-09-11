@@ -64,16 +64,55 @@ main {
     height: 100vh;
 }
 
+/* CSSの修正・追加箇所 */
+
 .load {
-    width: 50px;
-    height: 20px;
+    width: 30px; /* 横幅を100%に設定 */
+    height: 10px;   /* 初期は高さ0 */
     background-color: aquamarine;
-    transition: width 1s ease;
-    margin: 0 auto; 
+    transition: height 1s ease;
+    overflow: hidden; /* 中身が見えないようにする */
+    position: relative;
+    overflow: hidden;
 }
 
-
 .load.expanded {
+    height: 300px; /* 縦方向にいっぱいに広がる */
     width: 100%;
-    transition: width 1s ease;
+}
+
+.profile-content {
+    opacity: 0; /* 初期状態では非表示 */
+    transition: opacity 1s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.load.expanded .profile-content {
+    opacity: 1; /* バーが広がった時に表示 */
+}
+
+h2, p {
+    opacity: 0;  /* 初期状態は非表示 */
+    transform: translateY(20px);  /* 少し下の位置から */
+    transition: opacity 1s ease, transform 1s ease;  /* アニメーションの設定 */
+}
+
+.load.expanded h2, .load.expanded p {
+    opacity: 1;  /* 透明度を1にして表示 */
+    transform: translateY(0);  /* 元の位置に戻す */
+}
+
+.profile-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease; /* フェードイン/アウトのアニメーション */
+}
+
+.load.expanded .profile-content {
+    opacity: 1;  /* クリックで表示 */
+    visibility: visible;
 }

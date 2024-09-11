@@ -47,4 +47,41 @@
         }
         isExpanded = !isExpanded;  // 状態をトグル
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const loadBar = document.querySelector('.load');
+        let isExpanded = false;
+    
+        loadBar.addEventListener('click', () => {
+            if (isExpanded) {
+                loadBar.classList.remove('expanded');
+            } else {
+                loadBar.classList.add('expanded');
+            }
+            isExpanded = !isExpanded;  // 状態をトグル
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const loadBar = document.querySelector('.load');
+        let isExpanded = false;
+    
+        loadBar.addEventListener('click', () => {
+            const profileContent = loadBar.querySelector('.profile-content');
+    
+            if (isExpanded) {
+                profileContent.style.opacity = '0';  // フェードアウト
+                setTimeout(() => {
+                    loadBar.classList.remove('expanded');  // サイズを縮小
+                }, 500);  // フェードアウトが完了してから縮小
+            } else {
+                loadBar.classList.add('expanded');
+                setTimeout(() => {
+                    profileContent.style.opacity = '1';  // フェードイン
+                }, 300);  // サイズが広がってから表示
+            }
+            isExpanded = !isExpanded;
+        });
+    });
+    
 }
