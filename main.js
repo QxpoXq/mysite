@@ -1,39 +1,46 @@
 'use strict';
 
 {
-    // ナビゲーションのリストアイテムに対するツールチップ処理
     document.querySelectorAll('nav ul li').forEach(item => {
+        let tooltip;  // ツールチップの参照を保持
+    
         item.addEventListener('mouseover', function () {
-            const tooltipText = this.getAttribute('data-tooltip');
-
-            // ツールチップ要素を作成
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('tooltip');
-            tooltip.innerText = tooltipText;
-
-            // ツールチップをliに追加
-            this.appendChild(tooltip);
-
-            // 少し遅れてアニメーションのためにopacityを変化
+            // すでにツールチップが存在する場合、新しく作成しない
+            if (!tooltip) {
+                const tooltipText = this.getAttribute('data-tooltip');
+                
+                // ツールチップ要素を作成
+                tooltip = document.createElement('div');
+                tooltip.classList.add('tooltip');
+                tooltip.innerText = tooltipText;
+    
+                // ツールチップをliに追加
+                this.appendChild(tooltip);
+            }
+    
+            // ツールチップを表示
             setTimeout(() => {
                 tooltip.style.opacity = '1';
                 tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
-            }, 100); // 少しの遅延を加える
+            }, 100);
         });
-
+    
         item.addEventListener('mouseout', function () {
-            const tooltip = this.querySelector('.tooltip');
-
+            // ツールチップが存在する場合のみ処理
             if (tooltip) {
-                // ツールチップをフェードアウトさせて削除
+                // ツールチップをフェードアウト
                 tooltip.style.opacity = '0';
                 tooltip.style.transform = 'translateX(-50%) translateY(0)';
+    
+                // アニメーション後に削除
                 setTimeout(() => {
                     tooltip.remove();
-                }, 300); // アニメーション時間と合わせる
+                    tooltip = null;  // ツールチップの参照をクリア
+                }, 300);
             }
         });
     });
+    
 
     // 棒が伸び縮みする処理
     const loadBar = document.querySelector('.load');  // loadバーを取得
