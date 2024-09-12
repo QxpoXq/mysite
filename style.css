@@ -1,5 +1,11 @@
 @charset 'utf-8';
 
+html,
+body {
+    height: 100%;
+    overflow: auto;
+}
+
 body {
     font-size: 100%;
     margin: 0;
@@ -10,12 +16,16 @@ body {
 header {
     background-color: #333;
     padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2000;
 }
 
 .container {
     display: flex;
     justify-content: center;
-    /* 中央揃え */
 }
 
 nav ul {
@@ -62,6 +72,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin-top: 0;
 }
 
 /* CSSの修正・追加箇所 */
@@ -136,4 +147,8 @@ h2, p {
 .load.expanded .profile-content {
     opacity: 1;  /* クリックで表示 */
     visibility: visible;
+}
+
+footer {
+    height: 800px;
 }
