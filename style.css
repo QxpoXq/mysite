@@ -3,7 +3,6 @@
 html,
 body {
     height: 100%;
-    overflow: auto;
 }
 
 body {
@@ -55,7 +54,7 @@ nav ul li a:hover {
     position: absolute;
     bottom: -60px;
     left: 50%;
-    transform:  translateX(-50%) translateY(-30px);
+    transform: translateX(-50%) translateY(-30px);
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 5px 10px;
@@ -72,27 +71,23 @@ main {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin-top: 0;
+    margin-top: 60px; /* ヘッダー分のマージン */
 }
 
-/* CSSの修正・追加箇所 */
-
 .load {
-    width: 30px; /* 横幅を100%に設定 */
-    height: 10px;   /* 初期は高さ0 */
+    width: 30px;
+    height: 10px;
     background-color: lemonchiffon;
     transition: height 1s ease;
-    overflow: hidden; /* 中身が見えないようにする */
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
 
 .load.expanded {
-    height: 300px; /* 縦方向にいっぱいに広がる */
+    height: 300px;
     width: 100%;
 }
 
-/* profile-content, works-content, contact-content を重ねる */
 .profile-content, .works-content, .contact-content {
     position: absolute;
     top: 50%;
@@ -104,49 +99,23 @@ main {
     transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
 
-.load.expanded .profile-content,
-.load.expanded .works-content,
-.load.expanded .contact-content {
-    visibility: visible;
-    transition: opacity 0.5s ease;
-}
-
-.load.expanded .profile-content.show {
-    opacity: 1;
-    transition-delay: 0s;
-}
-
-.load.expanded .works-content.show {
-    opacity: 1;
-    transition-delay: 0s;
-}
-
+.load.expanded .profile-content.show,
+.load.expanded .works-content.show,
 .load.expanded .contact-content.show {
+    visibility: visible;
     opacity: 1;
     transition-delay: 0s;
 }
-
 
 h2, p {
-    opacity: 0;  /* 初期状態は非表示 */
-    transform: translateY(20px);  /* 少し下の位置から */
-    transition: opacity 1s ease, transform 1s ease;  /* アニメーションの設定 */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
 }
 
 .load.expanded h2, .load.expanded p {
-    opacity: 1;  /* 透明度を1にして表示 */
-    transform: translateY(0);  /* 元の位置に戻す */
-}
-
-.profile-content {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease; /* フェードイン/アウトのアニメーション */
-}
-
-.load.expanded .profile-content {
-    opacity: 1;  /* クリックで表示 */
-    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 footer {
