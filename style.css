@@ -81,19 +81,40 @@ main {
     width: 100%;
 }
 
-.profile-content {
-    opacity: 0; /* 初期状態では非表示 */
-    transition: opacity 1s ease;
+/* profile-content, works-content, contact-content を重ねる */
+.profile-content, .works-content, .contact-content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
 
-.load.expanded .profile-content {
-    opacity: 1; /* バーが広がった時に表示 */
+.load.expanded .profile-content,
+.load.expanded .works-content,
+.load.expanded .contact-content {
+    visibility: visible;
+    transition: opacity 0.5s ease;
 }
+
+.load.expanded .profile-content.show {
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.load.expanded .works-content.show {
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.load.expanded .contact-content.show {
+    opacity: 1;
+    transition-delay: 0s;
+}
+
 
 h2, p {
     opacity: 0;  /* 初期状態は非表示 */

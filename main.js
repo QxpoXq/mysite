@@ -42,18 +42,7 @@
     });
     
 
-    // 棒が伸び縮みする処理
-    const loadBar = document.querySelector('.load');  // loadバーを取得
-    let isExpanded = false;
-
-    loadBar.addEventListener('click', () => {
-        if (isExpanded) {
-            loadBar.classList.remove('expanded');  // 伸びた状態を解除
-        } else {
-            loadBar.classList.add('expanded');    // 伸びた状態にする
-        }
-        isExpanded = !isExpanded;  // 状態をトグル
-    });
+    
 
     document.addEventListener('DOMContentLoaded', function () {
         const loadBar = document.querySelector('.load');
@@ -69,27 +58,7 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const loadBar = document.querySelector('.load');
-        let isExpanded = false;
     
-        loadBar.addEventListener('click', () => {
-            const profileContent = loadBar.querySelector('.profile-content');
-    
-            if (isExpanded) {
-                profileContent.style.opacity = '0';  // フェードアウト
-                setTimeout(() => {
-                    loadBar.classList.remove('expanded');  // サイズを縮小
-                }, 500);  // フェードアウトが完了してから縮小
-            } else {
-                loadBar.classList.add('expanded');
-                setTimeout(() => {
-                    profileContent.style.opacity = '1';  // フェードイン
-                }, 300);  // サイズが広がってから表示
-            }
-            isExpanded = !isExpanded;
-        });
-    });
     
     // 既存のコード...
 
@@ -126,5 +95,71 @@ document.addEventListener('DOMContentLoaded', function () {
         isExpanded = !isExpanded;
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const loadBar = document.querySelector('.load');
+    const aboutLink = document.getElementById('about-link');
+    const worksLink = document.querySelector('li:nth-child(2) a'); // works のリンク
+    const contactLink = document.querySelector('li:nth-child(3) a'); // contact のリンク
+    let isExpanded = false;
+    let currentContent = null;  // 現在表示中のコンテンツを記憶
+
+    const profileContent = loadBar.querySelector('.profile-content');
+    const worksContent = loadBar.querySelector('.works-content');
+    const contactContent = loadBar.querySelector('.contact-content');
+
+    // about クリックでプロフィールを表示
+    aboutLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        toggleContent(profileContent);
+    });
+
+    // works クリックでワークスを表示
+    worksLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        toggleContent(worksContent);
+    });
+
+    // contact クリックでコンタクトを表示
+    contactLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        toggleContent(contactContent);
+    });
+
+    function toggleContent(content) {
+        if (isExpanded) {
+            if (currentContent === content) {
+                // 同じコンテンツをクリックした場合は閉じる
+                hideContent(content);
+                setTimeout(() => {
+                    loadBar.classList.remove('expanded');  // バーを閉じる
+                }, 500);
+                isExpanded = false;
+            } else {
+                // 違うコンテンツをクリックした場合はコンテンツを切り替え
+                hideContent(currentContent);
+                showContent(content);
+            }
+        } else {
+            loadBar.classList.add('expanded');
+            setTimeout(() => {
+                showContent(content);
+            }, 300);
+            isExpanded = true;
+        }
+        currentContent = content;  // 現在表示中のコンテンツを更新
+    }
+
+    function showContent(content) {
+        content.classList.add('show');
+    }
+
+    function hideContent(content) {
+        if (content) {
+            content.classList.remove('show');
+        }
+    }
+});
+
 
 }
