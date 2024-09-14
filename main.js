@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, 500);
                 isExpanded = false;
             }
-        } else if (target.classList.contains('profile-content') || 
-                   target.classList.contains('works-content') || 
-                   target.classList.contains('contact-content')) {
+        } else if (target.classList.contains('profile-content') ||
+            target.classList.contains('works-content') ||
+            target.classList.contains('contact-content')) {
             // コンテンツをクリックした場合は閉じる
             hideContent(currentContent);
             setTimeout(() => {
@@ -103,35 +103,35 @@ document.addEventListener('DOMContentLoaded', function () {
     // ツールチップのコード
     document.querySelectorAll('nav ul li').forEach(item => {
         let tooltip;  // ツールチップの参照を保持
-    
+
         item.addEventListener('mouseover', function () {
             // すでにツールチップが存在する場合、新しく作成しない
             if (!tooltip) {
                 const tooltipText = this.getAttribute('data-tooltip');
-                
+
                 // ツールチップ要素を作成
                 tooltip = document.createElement('div');
                 tooltip.classList.add('tooltip');
                 tooltip.innerText = tooltipText;
-    
+
                 // ツールチップをliに追加
                 this.appendChild(tooltip);
             }
-    
+
             // ツールチップを表示
             setTimeout(() => {
                 tooltip.style.opacity = '1';
                 tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
             }, 100);
         });
-    
+
         item.addEventListener('mouseout', function () {
             // ツールチップが存在する場合のみ処理
             if (tooltip) {
                 // ツールチップをフェードアウト
                 tooltip.style.opacity = '0';
                 tooltip.style.transform = 'translateX(-50%) translateY(0)';
-    
+
                 // アニメーション後に削除
                 setTimeout(() => {
                     tooltip.remove();
