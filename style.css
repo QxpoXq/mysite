@@ -108,6 +108,22 @@ main {
     transition-delay: 0s;
 }
 
+.profile-container {
+    display: flex;
+    align-items: center; /* 縦方向にセンタリング */
+}
+
+.profile-photo {
+    margin-right: 20px; /* 画像と右側のコンテンツの間にスペースを追加 */
+}
+
+.profile-details {
+    display: flex;
+    margin-left: 20px;
+    flex-direction: column; /* 縦に並べる */
+}
+
+
 .profile-photo {
     width: 150px;
     height: 150px;
