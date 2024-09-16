@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function showContent(content) {
         content.classList.add('show');
     }
-
+    
     function hideContent(content) {
         if (content) {
             content.classList.remove('show');
         }
-    }
+    }    
 
     // about クリックでプロフィールを表示
     aboutLink.addEventListener('click', (event) => {
