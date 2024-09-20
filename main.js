@@ -1,143 +1,109 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const loadBar = document.querySelector('.load');
-    const aboutLink = document.getElementById('about-link');
-    const worksLink = document.querySelector('li:nth-child(2) a'); // works のリンク
-    const contactLink = document.querySelector('li:nth-child(3) a'); // contact のリンク
-
-    const profileContent = loadBar.querySelector('.profile-content');
-    const worksContent = loadBar.querySelector('.works-content');
-    const contactContent = loadBar.querySelector('.contact-content');
+    const links = {
+        about: document.getElementById('about-link'),
+        works: document.querySelector('li:nth-child(2) a'),
+        contact: document.querySelector('li:nth-child(3) a')
+    };
+    const contents = {
+        profile: loadBar.querySelector('.profile-content'),
+        works: loadBar.querySelector('.works-content'),
+        contact: loadBar.querySelector('.contact-content')
+    };
 
     let isExpanded = false;
-    let currentContent = null;  // 現在表示中のコンテンツを記憶
-    let isAnimating = false;    // アニメーション中かどうかを管理
+    let currentContent = null;
+    let isAnimating = false;
 
-    function toggleContent(content) {
-        if (isAnimating) return;  // アニメーション中は処理を無視
-        isAnimating = true;       // アニメーション開始
+    const toggleContent = (content) => {
+        if (isAnimating) return;
+        isAnimating = true;
 
         if (isExpanded) {
             if (currentContent === content) {
-                // 同じコンテンツをクリックした場合は閉じる
                 hideContent(content);
-                setTimeout(() => {
-                    loadBar.classList.remove('expanded');  // バーを閉じる
-                    isAnimating = false;                   // アニメーション終了
-                }, 500);
-                isExpanded = false;
+                setTimeout(closeLoadBar, 500);
             } else {
-                // 違うコンテンツをクリックした場合はコンテンツを切り替え
                 hideContent(currentContent);
-                setTimeout(() => {
-                    showContent(content);
-                    setTimeout(() => isAnimating = false, 500);  // アニメーション終了
-                }, 300); // 現在のコンテンツが完全に隠れた後に表示する
+                setTimeout(() => showContent(content), 300);
             }
         } else {
-            loadBar.classList.add('expanded');
-            setTimeout(() => {
-                showContent(content);
-                setTimeout(() => isAnimating = false, 500);  // アニメーション終了
-            }, 300);
-            isExpanded = true;
+            openLoadBar();
+            setTimeout(() => showContent(content), 300);
         }
-        currentContent = content;  // 現在表示中のコンテンツを更新
-    }
+        currentContent = content;
+    };
 
-    function showContent(content) {
+    const showContent = (content) => {
         content.classList.add('show');
-    }
-    
-    function hideContent(content) {
-        if (content) {
-            content.classList.remove('show');
-        }
-    }    
+        setTimeout(() => isAnimating = false, 500);
+    };
 
-    // about クリックでプロフィールを表示
-    aboutLink.addEventListener('click', (event) => {
+    const hideContent = (content) => {
+        if (content) content.classList.remove('show');
+    };
+
+    const openLoadBar = () => {
+        loadBar.classList.add('expanded');
+        isExpanded = true;
+    };
+
+    const closeLoadBar = () => {
+        loadBar.classList.remove('expanded');
+        isExpanded = false;
+        isAnimating = false;
+    };
+
+    const handleLinkClick = (event, content) => {
         event.preventDefault();
-        toggleContent(profileContent);
-    });
+        toggleContent(content);
+    };
 
-    // works クリックでワークスを表示
-    worksLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        toggleContent(worksContent);
-    });
+    links.about.addEventListener('click', (event) => handleLinkClick(event, contents.profile));
+    links.works.addEventListener('click', (event) => handleLinkClick(event, contents.works));
+    links.contact.addEventListener('click', (event) => handleLinkClick(event, contents.contact));
 
-    // contact クリックでコンタクトを表示
-    contactLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        toggleContent(contactContent);
-    });
-
-    // メインの div をクリックして開閉できるようにする
     loadBar.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target === loadBar) {
-            // メインの div をクリックした場合は閉じる
-            if (isExpanded) {
-                hideContent(currentContent);
-                setTimeout(() => {
-                    loadBar.classList.remove('expanded');
-                    isAnimating = false;
-                }, 500);
-                isExpanded = false;
-            }
-        } else if (target.classList.contains('profile-content') ||
-            target.classList.contains('works-content') ||
-            target.classList.contains('contact-content')) {
-            // コンテンツをクリックした場合は閉じる
+        if (event.target === loadBar && isExpanded) {
             hideContent(currentContent);
-            setTimeout(() => {
-                loadBar.classList.remove('expanded');
-                isAnimating = false;
-            }, 500);
-            isExpanded = false;
+            setTimeout(closeLoadBar, 500);
+        } else if (['profile-content', 'works-content', 'contact-content'].includes(event.target.classList[0])) {
+            hideContent(currentContent);
+            setTimeout(closeLoadBar, 500);
         }
     });
 
-    // ツールチップのコード
-    document.querySelectorAll('nav ul li').forEach(item => {
-        let tooltip;  // ツールチップの参照を保持
+    // ツールチップ関連のコードを関数化
+    const handleTooltip = (item) => {
+        let tooltip = null;
 
         item.addEventListener('mouseover', function () {
-            // すでにツールチップが存在する場合、新しく作成しない
             if (!tooltip) {
-                const tooltipText = this.getAttribute('data-tooltip');
-
-                // ツールチップ要素を作成
                 tooltip = document.createElement('div');
                 tooltip.classList.add('tooltip');
-                tooltip.innerText = tooltipText;
-
-                // ツールチップをliに追加
+                tooltip.innerText = this.getAttribute('data-tooltip');
                 this.appendChild(tooltip);
-            }
 
-            // ツールチップを表示
-            setTimeout(() => {
-                tooltip.style.opacity = '1';
-                tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
-            }, 100);
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'translateX(-50%) translateY(-10px)';
+                }, 100);
+            }
         });
 
-        item.addEventListener('mouseout', function () {
-            // ツールチップが存在する場合のみ処理
+        item.addEventListener('mouseout', () => {
             if (tooltip) {
-                // ツールチップをフェードアウト
                 tooltip.style.opacity = '0';
                 tooltip.style.transform = 'translateX(-50%) translateY(0)';
-
-                // アニメーション後に削除
                 setTimeout(() => {
                     tooltip.remove();
-                    tooltip = null;  // ツールチップの参照をクリア
+                    tooltip = null;
                 }, 300);
             }
         });
-    });
+    };
+
+    document.querySelectorAll('nav ul li').forEach(handleTooltip);
 });
